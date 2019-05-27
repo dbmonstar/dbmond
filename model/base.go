@@ -21,7 +21,7 @@ import (
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
 
-	"pmm-ruled/common"
+	"github.com/dbmonstar/pmm-ruled/common"
 	"time"
 )
 

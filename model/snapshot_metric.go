@@ -17,7 +17,7 @@
 package model
 
 import (
-	"pmm-ruled/common"
+	"github.com/dbmonstar/pmm-ruled/common"
 	"reflect"
 	"time"
 )

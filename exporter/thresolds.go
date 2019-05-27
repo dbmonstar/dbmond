@@ -18,8 +18,8 @@ package exporter
 
 import (
 	"net/http"
-	"pmm-ruled/common"
-	"pmm-ruled/model"
+	"github.com/dbmonstar/pmm-ruled/common"
+	"github.com/dbmonstar/pmm-ruled/model"
 	"strconv"
 	"time"
 

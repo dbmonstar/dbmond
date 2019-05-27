@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"pmm-ruled/common"
-	"pmm-ruled/model"
+	"github.com/dbmonstar/pmm-ruled/common"
+	"github.com/dbmonstar/pmm-ruled/model"
 	"regexp"
 
 	"github.com/gin-gonic/gin"

@@ -17,7 +17,7 @@
 package handler
 
 import (
-	"pmm-ruled/common"
+	"github.com/dbmonstar/pmm-ruled/common"
 
 	"net/http"
 

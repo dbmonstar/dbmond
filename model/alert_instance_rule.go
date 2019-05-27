@@ -18,7 +18,7 @@ package model
 
 import (
 	"fmt"
-	"pmm-ruled/common"
+	"github.com/dbmonstar/pmm-ruled/common"
 	"reflect"
 	"strconv"
 	"strings"

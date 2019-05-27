@@ -18,8 +18,8 @@ package handler
 
 import (
 	"fmt"
-	"pmm-ruled/common"
-	"pmm-ruled/model"
+	"github.com/dbmonstar/pmm-ruled/common"
+	"github.com/dbmonstar/pmm-ruled/model"
 
 	"github.com/gin-gonic/gin"
 )
