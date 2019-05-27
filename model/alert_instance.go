@@ -18,7 +18,7 @@ package model
 
 import (
 	"fmt"
-	"github.com/dbmonstar/pmm-ruled/common"
+	"pmm-ruled/common"
 	"reflect"
 	"regexp"
 	"time"
@@ -218,23 +218,6 @@ func (o *AlertInstance) GetInstanceExtList() []AlertInstanceExt {
 	return r
 }
 
-// // GetRules get rules in alert group
-// func (o *AlertInstance) GetRules() []AlertRuleInstanceVal {
-// 	var r []AlertRuleInstanceVal
-// 	if o.Exist() {
-// 		orm.Sql(`
-// 			select
-// 				alert_rule.*,
-// 				alert_instance_rule.val as instance_val
-// 			from alert_instance_rule
-// 			inner join alert_rule on alert_rule.id = alert_instance_rule.rule_id
-// 			where alert_instance_rule.instance_id = ?
-// 			order by alert_rule.name
-// 		`, o.ID).Find(&r)
-// 	}
-// 	return r
-// }
-
 // GetRules get rules in alert group
 func (o *AlertInstance) GetRules() []map[string]string {
 	results, _ := orm.QueryString(`
@@ -250,22 +233,6 @@ func (o *AlertInstance) GetRules() []map[string]string {
 	order by alert_rule.name`, o.ID)
 	return results
 }
-
-// // GetSkipRules get skip rules in instance
-// func (o *AlertInstance) GetSkipRules() []AlertRuleMini {
-// 	var r []AlertRuleMini
-// 	if o.Exist() {
-// 		orm.Sql(`
-// 			select
-// 				alert_rule.*
-// 			from alert_instance_skip_rule
-// 			inner join alert_rule on alert_rule.id = alert_instance_skip_rule.rule_id
-// 			where alert_instance_skip_rule.instance_id = ?
-// 			order by alert_rule.name
-// 		`, o.ID).Find(&r)
-// 	}
-// 	return r
-// }
 
 // GetSkipRules get skip rules in instance
 func (o *AlertInstance) GetSkipRules() []map[string]string {
