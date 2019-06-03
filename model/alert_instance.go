@@ -18,7 +18,7 @@ package model
 
 import (
 	"fmt"
-	"prom-ruled/common"
+	"github.com/dbmonstar/prom-ruled/common"
 	"reflect"
 	"regexp"
 	"time"
