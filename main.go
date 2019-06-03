@@ -1,4 +1,4 @@
-// pmm-ruled
+// prom-ruled
 // Copyright (C) 2019 gywndi@gmail.com in kakaoBank
 //
 // This program is free software: you can redistribute it and/or modify
@@ -17,11 +17,11 @@
 package main
 
 import (
-	"github.com/dbmonstar/pmm-ruled/batch"
-	"github.com/dbmonstar/pmm-ruled/common"
-	"github.com/dbmonstar/pmm-ruled/exporter"
-	"github.com/dbmonstar/pmm-ruled/handler"
-	"github.com/dbmonstar/pmm-ruled/model"
+	"github.com/dbmonstar/prom-ruled/batch"
+	"github.com/dbmonstar/prom-ruled/common"
+	"github.com/dbmonstar/prom-ruled/exporter"
+	"github.com/dbmonstar/prom-ruled/handler"
+	"github.com/dbmonstar/prom-ruled/model"
 
 	"golang.org/x/sync/errgroup"
 )

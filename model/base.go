@@ -1,4 +1,4 @@
-// pmm-ruled
+// prom-ruled
 // Copyright (C) 2019 gywndi@gmail.com in kakaoBank
 //
 // This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import (
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
 
-	"github.com/dbmonstar/pmm-ruled/common"
+	"github.com/dbmonstar/prom-ruled/common"
 	"time"
 )
 

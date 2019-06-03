@@ -1,4 +1,4 @@
-// pmm-ruled
+// prom-ruled
 // Copyright (C) 2019 gywndi@gmail.com in kakaoBank
 //
 // This program is free software: you can redistribute it and/or modify
@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"github.com/dbmonstar/pmm-ruled/common"
-	"github.com/dbmonstar/pmm-ruled/model"
+	"github.com/dbmonstar/prom-ruled/common"
+	"github.com/dbmonstar/prom-ruled/model"
 	"regexp"
 
 	"github.com/gin-gonic/gin"

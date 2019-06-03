@@ -1,4 +1,4 @@
-// pmm-ruled
+// prom-ruled
 // Copyright (C) 2019 gywndi@gmail.com in kakaoBank
 //
 // This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,8 @@ package handler
 
 import (
 	"fmt"
-	"github.com/dbmonstar/pmm-ruled/common"
-	"github.com/dbmonstar/pmm-ruled/model"
+	"github.com/dbmonstar/prom-ruled/common"
+	"github.com/dbmonstar/prom-ruled/model"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,7 +29,7 @@ func startAlertInstanceAPI(r *gin.RouterGroup) {
 
 	// ======================
 	// not used, instances are gathered by background batch program,
-	// => pmm-ruled/batch/see sysnc_instance.go
+	// => prom-ruled/batch/see sysnc_instance.go
 	// ======================
 	// // new
 	// r.POST("/alert/instance", func(c *gin.Context) {

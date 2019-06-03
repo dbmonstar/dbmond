@@ -1,10 +1,8 @@
-[![CLA assistant](https://cla-assistant.percona.com/readme/badge/Percona-Lab/pmm-ruled)](https://cla-assistant.percona.com/Percona-Lab/pmm-ruled)
+[![CLA assistant](https://cla-assistant.percona.com/readme/badge/Percona-Lab/prom-ruled)](https://cla-assistant.percona.com/Percona-Lab/prom-ruled)
 
 # PMM-RULED
 
-<img src="images/pmm-ruled-overview.png" width="600">
-
-## pmm-ruled is 
+## prom-ruled is 
 1. Alert Rule Manager
 2. Record Rule Manager
 3. Snapshot Rule Manager
@@ -12,9 +10,9 @@
     
 ## Database setting
 
-    create database `pmm-ruled`;
+    create database `prom-ruled`;
     create user ruled@127.0.0.1 identified by 'ruled';
-    grant all on `pmm-ruled`.* to ruled;
+    grant all on `prom-ruled`.* to ruled;
 
 ## example config.ini
     [global]
@@ -32,7 +30,7 @@
     host = 127.0.0.1:3306
     user = ruled
     pass = ruled
-    db = pmm-ruled
+    db = prom-ruled
     #show_sql=1
     
     [prometheus]
@@ -56,9 +54,9 @@
     go get golang.org/x/sync/errgroup
 
     ## build and run
-    cd pmm-ruled
+    cd prom-ruled
     go build .
-    ./pmm-ruled
+    ./prom-ruled
     
 ## prometheus.yml
 Set rule path and new job for alert thresholds exporter.

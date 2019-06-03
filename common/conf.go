@@ -1,4 +1,4 @@
-// pmm-ruled
+// prom-ruled
 // Copyright (C) 2019 gywndi@gmail.com in kakaoBank
 //
 // This program is free software: you can redistribute it and/or modify
@@ -63,7 +63,7 @@ func LoadConfig() {
 	// Load string configure
 	ConfigStr["abs"], err = filepath.Abs(filepath.Dir(os.Args[0]))
 
-	ConfigStr["glob.base"] = Cfg.MustValue("global", "base", "/pmm-ruled")
+	ConfigStr["glob.base"] = Cfg.MustValue("global", "base", "/prom-ruled")
 	ConfigStr["glob.exp_listen_port"] = Cfg.MustValue("global", "exp_listen_port", ":9104")
 	ConfigStr["glob.adm_listen_port"] = Cfg.MustValue("global", "adm_listen_port", ":3333")
 	ConfigInt["glob.log_level"] = Cfg.MustInt("global", "log_level", 2)
