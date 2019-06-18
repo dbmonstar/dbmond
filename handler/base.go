@@ -31,12 +31,12 @@ func StartAdmin() error {
 	router := gin.Default()
 
 	// Base router
-	base := router.Group(common.ConfigStr["glob.base"])
+	base := router.Group(common.Base)
 
 	// API route
 	StartAPI(base.Group("/api/v1"))
 
-	return router.Run(common.ConfigStr["glob.adm_listen_port"])
+	return router.Run(common.Port)
 }
 
 // StartAPI start api server
@@ -50,9 +50,9 @@ func StartAPI(r *gin.RouterGroup) {
 	startRecordRuleAPI(r)
 	startSnapshotRuleAPI(r)
 
-        // Flush rule on start
-        FlushAlert()
-        FlushRecord()
+	// Flush rule on start
+	FlushAlert()
+	FlushRecord()
 }
 
 // ErrorIf return boolean if error

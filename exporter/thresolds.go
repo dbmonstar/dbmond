@@ -18,10 +18,11 @@ package exporter
 
 import (
 	"net/http"
-	"github.com/dbmonstar/dbmond/common"
-	"github.com/dbmonstar/dbmond/model"
 	"strconv"
 	"time"
+
+	"github.com/dbmonstar/dbmond/common"
+	"github.com/dbmonstar/dbmond/model"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -148,6 +149,6 @@ func StartExporter() error {
 
 	}))
 
-	common.Log.Info("Start exporter, listening", common.ConfigStr["glob.exp_listen_port"])
-	return http.ListenAndServe(common.ConfigStr["glob.exp_listen_port"], nil)
+	common.Log.Info("Start exporter, listening", common.ExporterPort)
+	return http.ListenAndServe(common.ExporterPort, nil)
 }

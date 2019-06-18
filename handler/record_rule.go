@@ -20,9 +20,10 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"regexp"
+
 	"github.com/dbmonstar/dbmond/common"
 	"github.com/dbmonstar/dbmond/model"
-	"regexp"
 
 	"github.com/gin-gonic/gin"
 )
@@ -188,7 +189,7 @@ func FlushRecord() error {
 	for seq, interval := range recordInterval {
 
 		// set source(temporary) rule file
-		ruleFileName := common.RecStatName + "_" + fmt.Sprintf("%02d", seq) + ".rule.yml"
+		ruleFileName := common.RecStatPrefix + "_" + fmt.Sprintf("%02d", seq) + ".rule.yml"
 		ruleFileWorkPath := fmt.Sprintf("%s/%s", common.PromWorkPath, ruleFileName) // source
 
 		// create source(temporary) rule file
@@ -201,7 +202,7 @@ func FlushRecord() error {
 
 		// generate rule (header)
 		ruleString := fmt.Sprintln("groups:")
-		ruleString += fmt.Sprintln("- name: " + common.RecStatName + "_" + interval + "_rules")
+		ruleString += fmt.Sprintln("- name: " + common.RecStatPrefix + "_" + interval + "_rules")
 		ruleString += fmt.Sprintln("  interval: " + interval)
 		ruleString += fmt.Sprintln("  rules:")
 
@@ -211,7 +212,7 @@ func FlushRecord() error {
 
 			if seq == 0 {
 				rule.Query = re.ReplaceAllString(rule.Query, " ")
-				ruleString += fmt.Sprintln("  - record: " + common.RecRawName + ":" + rule.Name)
+				ruleString += fmt.Sprintln("  - record: " + common.RecRawPrefix + ":" + rule.Name)
 				ruleString += fmt.Sprintln("    expr:  ")
 				ruleString += fmt.Sprintln("      " + rule.Query)
 
@@ -221,20 +222,20 @@ func FlushRecord() error {
 
 					var metricName string
 					if seq > 2 {
-						metricName = common.RecStatName + ":" + rule.Name + ":" + opr + ":" + recordInterval[seq-2]
+						metricName = common.RecStatPrefix + ":" + rule.Name + ":" + opr + ":" + recordInterval[seq-2]
 					} else {
-						metricName = common.RecRawName + ":" + rule.Name
+						metricName = common.RecRawPrefix + ":" + rule.Name
 					}
 
-					ruleString += fmt.Sprintln("  - record: " + common.RecStatName + ":" + rule.Name + ":" + opr + ":" + interval)
+					ruleString += fmt.Sprintln("  - record: " + common.RecStatPrefix + ":" + rule.Name + ":" + opr + ":" + interval)
 					ruleString += fmt.Sprintln("    expr:  ")
 					ruleString += fmt.Sprintln("      " + opr + "_over_time(" + metricName + "[" + interval + "])")
 				}
 			} else {
 				common.Log.Info("Skip static rule -", rule.Name)
-				ruleString += fmt.Sprintln("  - record: " + common.RecStatName + ":" + rule.Name + ":snap:" + interval)
+				ruleString += fmt.Sprintln("  - record: " + common.RecStatPrefix + ":" + rule.Name + ":snap:" + interval)
 				ruleString += fmt.Sprintln("    expr:  ")
-				ruleString += fmt.Sprintln("      " + common.RecRawName + ":" + rule.Name)
+				ruleString += fmt.Sprintln("      " + common.RecRawPrefix + ":" + rule.Name)
 			}
 		}
 
@@ -257,7 +258,7 @@ func FlushRecord() error {
 	for seq := range recordInterval {
 
 		// set source(temporary) and target(prometheus) rule file
-		ruleFileName := common.RecStatName + "_" + fmt.Sprintf("%02d", seq) + ".rule.yml"
+		ruleFileName := common.RecStatPrefix + "_" + fmt.Sprintf("%02d", seq) + ".rule.yml"
 		ruleFileWorkPath := fmt.Sprintf("%s/%s", common.PromWorkPath, ruleFileName)  // source
 		ruleFilePromPath := fmt.Sprintf("%s/%s", common.Prom.RulePath, ruleFileName) // destination
 

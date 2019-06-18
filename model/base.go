@@ -21,8 +21,9 @@ import (
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
 
-	"github.com/dbmonstar/dbmond/common"
 	"time"
+
+	"github.com/dbmonstar/dbmond/common"
 )
 
 var orm *xorm.Engine
@@ -32,12 +33,12 @@ func NewDatabase() {
 	common.Log.Info("db initializing...")
 
 	var err error
-	host := common.ConfigStr["db.host"]
-	user := common.ConfigStr["db.user"]
-	pass := common.ConfigStr["db.pass"]
-	db := common.ConfigStr["db.db"]
+	// host := common.ConfigStr["db.host"]
+	// user := common.ConfigStr["db.user"]
+	// pass := common.ConfigStr["db.pass"]
+	// db := common.ConfigStr["db.db"]
 
-	orm, err = xorm.NewEngine("mysql", user+":"+pass+"@tcp("+host+")/"+db+"?charset=utf8")
+	orm, err = xorm.NewEngine("mysql", common.DBUser+":"+common.DBPassword+"@tcp("+common.DBHost+")/"+common.Database+"?charset=utf8")
 	common.PanicIf(err)
 
 	orm.TZLocation = time.Local
@@ -45,7 +46,7 @@ func NewDatabase() {
 	orm.SetConnMaxLifetime(1 * time.Hour)
 	orm.SetMapper(core.GonicMapper{})
 
-	if common.ConfigInt["db.show_sql"] == 1 {
+	if common.ShowSql == 1 {
 		orm.ShowSQL(true)
 	}
 

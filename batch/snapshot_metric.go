@@ -17,17 +17,15 @@
 package batch
 
 import (
-	"github.com/dbmonstar/dbmond/common"
-	"github.com/dbmonstar/dbmond/model"
 	"strconv"
 	"time"
+
+	"github.com/dbmonstar/dbmond/common"
+	"github.com/dbmonstar/dbmond/model"
 )
 
 // StartSnapshotBatch snapshot batch
 func StartSnapshotBatch() error {
-	rowKey := common.ConfigStr["snapshot.row_key"]
-	interval := common.ConfigInt["snapshot.interval"]
-	tombstoneSec := common.ConfigInt["snapshot.tombstone_sec"]
 	for {
 		go func() {
 
@@ -49,7 +47,7 @@ func StartSnapshotBatch() error {
 
 					// parse prometheus result
 					ts, _ := json.Value[0].(float64)
-					ins := json.Metric[rowKey]
+					ins := json.Metric["instance"]
 					job := json.Metric["job"]
 					num, _ := strconv.ParseFloat(json.Value[1].(string), 64)
 					str := json.Metric[*rule.Label]
@@ -72,9 +70,9 @@ func StartSnapshotBatch() error {
 			}
 
 			// REMOVE unused metrics
-			(&model.SnapshotMetric{}).Sweep(tombstoneSec)
+			(&model.SnapshotMetric{}).Sweep(common.SnapshotTombSec)
 
 		}()
-		time.Sleep(time.Duration(interval) * time.Second)
+		time.Sleep(time.Duration(common.SnapshotInterval) * time.Second)
 	}
 }

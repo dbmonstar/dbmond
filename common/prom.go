@@ -53,19 +53,15 @@ type PromAPI struct {
 // Prom prometheus api
 var Prom PromAPI
 
-// PromWorkPath prometheus temporary work path
-var PromWorkPath string
-
 // SetPrometheus new prometheus api
 func SetPrometheus() {
 	Prom = PromAPI{
-		API:      ConfigStr["prom.api"],
-		RulePath: ConfigStr["prom.rule_path"],
-		Promtool: ConfigStr["prom.promtool"],
-		Timeout:  ConfigInt["prom.timeout"],
+		API:      PromApi,
+		RulePath: PromRulePath,
+		Promtool: Promtool,
+		Timeout:  PromApiTimeout,
 	}
 
-	PromWorkPath = ConfigStr["prom.work_path"]
 	if err := os.Mkdir(PromWorkPath, os.ModePerm); !os.IsExist(err) {
 		PanicIf(err)
 	}

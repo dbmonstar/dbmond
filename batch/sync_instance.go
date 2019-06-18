@@ -17,9 +17,10 @@
 package batch
 
 import (
+	"time"
+
 	"github.com/dbmonstar/dbmond/common"
 	"github.com/dbmonstar/dbmond/model"
-	"time"
 )
 
 // StartInstanceBatch Instanceshot batch

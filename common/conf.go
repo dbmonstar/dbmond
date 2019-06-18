@@ -25,11 +25,11 @@ import (
 	"github.com/Unknwon/goconfig"
 )
 
-// ConfigStr configure string
-var ConfigStr map[string]string
+// // ConfigStr configure string
+// var ConfigStr map[string]string
 
-// ConfigInt configure int
-var ConfigInt map[string]int
+// // ConfigInt configure int
+// var ConfigInt map[string]int
 
 // Cfg config
 var Cfg *goconfig.ConfigFile
@@ -37,17 +37,20 @@ var Cfg *goconfig.ConfigFile
 // Log logger object
 var Log Logger
 
-// RecRawName Record raw metric prefix
-var RecRawName string
+var AbsPath, Base, Port, ExporterPort string
+var LogLevel, SnapshotInterval, SnapshotTombSec int
 
-// RecStatName Record stat metric prefix
-var RecStatName string
+var PromApi, PromRulePath, PromWorkPath, Promtool, RecRawPrefix, RecStatPrefix string
+var PromApiTimeout int
+
+var DBHost, DBUser, DBPassword, Database string
+var ShowSql int
 
 // LoadConfig load config
 func LoadConfig() {
 
-	ConfigStr = make(map[string]string)
-	ConfigInt = make(map[string]int)
+	// ConfigStr = make(map[string]string)
+	// ConfigInt = make(map[string]int)
 
 	// parameter
 	var config string
@@ -61,46 +64,44 @@ func LoadConfig() {
 	}
 
 	// Load string configure
-	ConfigStr["abs"], err = filepath.Abs(filepath.Dir(os.Args[0]))
+	AbsPath, err = filepath.Abs(filepath.Dir(os.Args[0]))
 
-	ConfigStr["glob.base"] = Cfg.MustValue("global", "base", "/dbmond")
-	ConfigStr["glob.exp_listen_port"] = Cfg.MustValue("global", "exp_listen_port", ":9104")
-	ConfigStr["glob.adm_listen_port"] = Cfg.MustValue("global", "adm_listen_port", ":3333")
-	ConfigInt["glob.log_level"] = Cfg.MustInt("global", "log_level", 2)
+	Base = Cfg.MustValue("dbmond", "base", "/dbmond")
+	Port = Cfg.MustValue("dbmond", "port", ":3333")
+	ExporterPort = Cfg.MustValue("dbmond", "exporter_port", ":9104")
+	LogLevel = Cfg.MustInt("dbmond", "log_level", 2)
 
-	ConfigInt["snapshot.interval"] = Cfg.MustInt("snapshot", "interval", 3)
-	ConfigInt["snapshot.tombstone_sec"] = Cfg.MustInt("snapshot", "tombstone_sec", 600)
-	ConfigStr["snapshot.row_key"] = Cfg.MustValue("snapshot", "row_key", "instance")
+	SnapshotInterval = Cfg.MustInt("dbmond", "snapshot_interval", 3)
+	SnapshotTombSec = Cfg.MustInt("dbmond", "snapshot_tomb_sec", 600)
 
-	ConfigStr["prom.api"] = Cfg.MustValue("prometheus", "api", "http://127.0.0.1:9090/prometheus")
-	ConfigStr["prom.rule_path"] = Cfg.MustValue("prometheus", "rule_path", "prom-rule")
-	ConfigStr["prom.work_path"] = fmt.Sprintf("%s/%s", ConfigStr["prom.rule_path"], "work")
-	ConfigStr["prom.promtool"] = Cfg.MustValue("prometheus", "promtool", "promtool")
-	ConfigInt["prom.timeout"] = Cfg.MustInt("prometheus", "timeout", 500)
+	PromApi = Cfg.MustValue("dbmond", "prom_api", "http://127.0.0.1:9090/prometheus")
+	PromApiTimeout = Cfg.MustInt("dbmond", "prom_api_timeout", 500)
+	PromRulePath = Cfg.MustValue("dbmond", "prom_rule_path", "rule")
+	PromWorkPath = fmt.Sprintf("%s/%s", PromRulePath, "work")
+	Promtool = Cfg.MustValue("dbmond", "promtool", "promtool")
+	RecRawPrefix = Cfg.MustValue("dbmond", "rec_raw_prefix", "raw")
+	RecStatPrefix = Cfg.MustValue("dbmond", "rec_stat_prefix", "stat")
 
-	ConfigStr["db.host"] = Cfg.MustValue("database", "host", "127.0.0.1")
-	ConfigStr["db.user"] = Cfg.MustValue("database", "user", "root")
-	ConfigStr["db.pass"] = Cfg.MustValue("database", "pass", "pass")
-	ConfigStr["db.db"] = Cfg.MustValue("database", "db", "db")
-	ConfigInt["db.show_sql"] = Cfg.MustInt("database", "show_sql", 0)
-
-	RecRawName = "raw"
-	RecStatName = "stat"
+	DBHost = Cfg.MustValue("database", "host", "127.0.0.1")
+	DBUser = Cfg.MustValue("database", "user", "root")
+	DBPassword = Cfg.MustValue("database", "pass", "pass")
+	Database = Cfg.MustValue("database", "db", "db")
+	ShowSql = Cfg.MustInt("database", "show_sql", 0)
 
 	// Work path create
-	if os.MkdirAll(ConfigStr["prom.work_path"], os.ModePerm); err != nil {
+	if os.MkdirAll(PromWorkPath, os.ModePerm); err != nil {
 		PanicIf(err)
 	}
-	Log.Info("work path", ConfigStr["prom.work_path"], "ok")
+	Log.Info("work path", PromWorkPath, "ok")
 
 	// Rule path create
-	if os.MkdirAll(ConfigStr["prom.rule_path"], os.ModePerm); err != nil {
+	if os.MkdirAll(PromRulePath, os.ModePerm); err != nil {
 		PanicIf(err)
 	}
-	Log.Info("work path", ConfigStr["prom.rule_path"], "ok")
+	Log.Info("rule path", PromRulePath, "ok")
 
 	// Log Setting
-	Log.SetLogLevel(ConfigInt["glob.log_level"])
+	Log.SetLogLevel(LogLevel)
 
 	// Prometheus http client setting
 	SetPrometheus()
