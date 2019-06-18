@@ -1,4 +1,4 @@
-// prom-ruled
+// dbmond
 // Copyright (C) 2019 gywndi@gmail.com in kakaoBank
 //
 // This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,8 @@ package handler
 
 import (
 	"fmt"
-	"github.com/dbmonstar/prom-ruled/common"
-	"github.com/dbmonstar/prom-ruled/model"
+	"github.com/dbmonstar/dbmond/common"
+	"github.com/dbmonstar/dbmond/model"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,7 +29,7 @@ func startAlertInstanceAPI(r *gin.RouterGroup) {
 
 	// ======================
 	// not used, instances are gathered by background batch program,
-	// => prom-ruled/batch/see sysnc_instance.go
+	// => dbmond/batch/see sysnc_instance.go
 	// ======================
 	// // new
 	// r.POST("/alert/instance", func(c *gin.Context) {
