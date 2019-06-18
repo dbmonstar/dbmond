@@ -1,0 +1,5 @@
+groups:
+- name: stat_5s_rules
+  interval: 5s
+  rules:
+

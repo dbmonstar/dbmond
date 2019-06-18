@@ -18,6 +18,7 @@ package handler
 
 import (
 	"fmt"
+
 	"github.com/dbmonstar/dbmond/common"
 	"github.com/dbmonstar/dbmond/model"
 
@@ -26,30 +27,6 @@ import (
 
 // startAlertInstanceAPI alert instance API
 func startAlertInstanceAPI(r *gin.RouterGroup) {
-
-	// ======================
-	// not used, instances are gathered by background batch program,
-	// => dbmond/batch/see sysnc_instance.go
-	// ======================
-	// // new
-	// r.POST("/alert/instance", func(c *gin.Context) {
-	// 	var err error
-	// 	var params model.AlertInstance
-
-	// 	// bind params (form params)
-	// 	err = c.Bind(&params)
-	// 	if ErrorIf(c, err) {
-	// 		return
-	// 	}
-
-	// 	// insert
-	// 	err = params.Insert()
-	// 	if ErrorIf(c, err) {
-	// 		return
-	// 	}
-
-	// 	Success(c, params.ID)
-	// })
 
 	// update
 	r.PUT("/alert/instance/:instance_id", func(c *gin.Context) {

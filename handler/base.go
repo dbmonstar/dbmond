@@ -49,6 +49,8 @@ func StartAPI(r *gin.RouterGroup) {
 	startAlertRuleAPI(r)
 	startRecordRuleAPI(r)
 	startSnapshotRuleAPI(r)
+	startErrorLogAPI(r)
+	startHookAPI(r)
 
 	// Flush rule on start
 	FlushAlert()

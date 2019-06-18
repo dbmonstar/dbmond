@@ -19,8 +19,10 @@ package common
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/Unknwon/goconfig"
 )
@@ -45,6 +47,9 @@ var PromApiTimeout int
 
 var DBHost, DBUser, DBPassword, Database string
 var ShowSql int
+
+var Timezone string
+var AlarmAPI map[string]string
 
 // LoadConfig load config
 func LoadConfig() {
@@ -87,6 +92,26 @@ func LoadConfig() {
 	DBPassword = Cfg.MustValue("database", "pass", "pass")
 	Database = Cfg.MustValue("database", "db", "db")
 	ShowSql = Cfg.MustInt("database", "show_sql", 0)
+
+	// web-hook
+	Timezone = strings.TrimSpace(os.Getenv("WEB_HOOK_TIMEZONE"))
+	if Timezone != "" {
+		log.Printf(`WEB_HOOK_TIMEZONE : "%s"`, Timezone)
+	}
+
+	critAPI := strings.TrimSpace(os.Getenv("WEB_HOOK_CRIT"))
+	if critAPI != "" {
+		log.Printf(`WEB_HOOK_CRIT : "%s"`, critAPI)
+	}
+	warnAPI := strings.TrimSpace(os.Getenv("WEB_HOOK_WARN"))
+	if warnAPI != "" {
+		log.Printf(`WEB_HOOK_WARN : "%s"`, warnAPI)
+	}
+
+	AlarmAPI = map[string]string{
+		"critical": critAPI,
+		"warining": warnAPI,
+	}
 
 	// Work path create
 	if os.MkdirAll(PromWorkPath, os.ModePerm); err != nil {

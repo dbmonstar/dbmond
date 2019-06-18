@@ -66,6 +66,8 @@ func syncTable() {
 	orm.Sync(new(RecordRule))
 	orm.Sync(new(SnapshotRule))
 	orm.Sync(new(SnapshotMetric))
+	orm.Sync(new(Hook))
+	orm.Sync(new(ErrorLog))
 }
 
 // GetDatabase get database orm object to use another package (not common)

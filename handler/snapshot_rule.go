@@ -18,6 +18,7 @@ package handler
 
 import (
 	"fmt"
+
 	"github.com/dbmonstar/dbmond/common"
 	"github.com/dbmonstar/dbmond/model"
 
@@ -179,5 +180,10 @@ func startSnapshotRuleAPI(r *gin.RouterGroup) {
 		}
 
 		Success(c, snapshotMetric)
+	})
+
+	r.GET("/snapshot/instances", func(c *gin.Context) {
+		var instance model.Instance
+		Success(c, instance.GetInstanceList())
 	})
 }
